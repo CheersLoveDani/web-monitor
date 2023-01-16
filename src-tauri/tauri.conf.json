@@ -69,7 +69,7 @@
         "fullscreen": false,
         "height": 800,
         "resizable": true,
-        "title": "web-monitor",
+        "title": "Web Monitor",
         "width": 1200
       }
     ]

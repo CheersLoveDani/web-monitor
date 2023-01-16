@@ -21,16 +21,17 @@ const Monitor = (prop: { website: string, siteName: string, id: number }) => {
   const [statusText, setStatusText] = useState('Untested')
   const [iconText, setIconText] = useState('')
   const [loadingStatus, setLoadingStatus] = useState(true)
-  const [loadingIcon, setLoadingIcon] = useState(true)
+  const [loadingIcon, setLoadingIcon] = useState(true) //haven't done anything with this but could be used to add loadingSpinner before icon loads
   const [checkingDeletePrompt, setCheckingDeletePrompt] = useState(false)
 
 
-  // useEffect - calls the checkStatus function on mount and whenever websiteData changes
+  // useEffect - calls the checkStatus and checkIcon() function on mount and whenever websiteData changes
   useEffect(() => {
     checkStatus();
     checkIcon();
   }, [websiteData])
 
+  // useEffect - sets up an interval to call the checkStatus() function once every hour
   useEffect(() => {
     const intervalId = setInterval(() => {
       console.log('checking');
@@ -134,8 +135,6 @@ const Monitor = (prop: { website: string, siteName: string, id: number }) => {
   }
 
 
-
-
   return (
     <div className={'monitor-wrapper ' + statusText}>
       <div className='flex-row'>
@@ -151,16 +150,12 @@ const Monitor = (prop: { website: string, siteName: string, id: number }) => {
         <div className='icon-button background-hover icon-danger' onClick={deleteWebsite}>
           <ImBin />
         </div>
-
       </div>
       <p className='monitor-url'>{prop.website}</p>
       <p>{!loadingStatus && status ? statusText : ''}</p>
       <div className='inline-button-container'>
-
         {loadingStatus ? <LoadingSpinner /> : ''}
       </div>
-
-
     </div>
   );
 };

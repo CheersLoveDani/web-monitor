@@ -13,6 +13,7 @@ import { MdAddCircleOutline, MdInfoOutline, MdOutlineRefresh, MdOutlineSettings 
 import { addingWebsiteState, viewModeState } from '../lib/atom';
 
 import logo from '../assets/128x128-white.png'
+import { AiFillHome } from 'react-icons/ai';
 
 const Nav = () => {
 
@@ -45,6 +46,9 @@ const Nav = () => {
             <img src={logo} className="main-logo" />
           </Link>
         </div>
+        <Link to="/" className="icon-button background-hover">
+          <AiFillHome />
+        </Link>
         <div className="icon-button background-hover" onClick={changeViewState}>
           {viewMode ? <BsFillGrid3X3GapFill /> : <GiHamburgerMenu />}
         </div>

@@ -3,7 +3,7 @@ const Settings = () => {
   return (
     <div className='main-content'>
       <div className="text-padding">
-        <h2>Settings</h2>
+        <h1>Settings</h1>
       </div>
     </div>
   );
