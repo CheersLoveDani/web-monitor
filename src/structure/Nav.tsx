@@ -8,7 +8,7 @@ import {
 
 import { BsFillGrid3X3GapFill } from 'react-icons/bs';
 import { GiHamburgerMenu } from 'react-icons/gi';
-import { MdAddCircleOutline, MdOutlineRefresh } from 'react-icons/md';
+import { MdAddCircleOutline, MdInfoOutline, MdOutlineRefresh, MdOutlineSettings } from 'react-icons/md';
 
 import { addingWebsiteState, viewModeState } from '../lib/atom';
 
@@ -39,19 +39,29 @@ const Nav = () => {
 
   return (
     <div className="top-row">
-      <div className="main-logo-wrapper">
-        <Link to="/">
-          <img src={logo} className="main-logo" />
+      <div className='flex-wrapper start-of-row'>
+        <div className="main-logo-wrapper">
+          <Link to="/">
+            <img src={logo} className="main-logo" />
+          </Link>
+        </div>
+        <div className="icon-button background-hover" onClick={changeViewState}>
+          {viewMode ? <BsFillGrid3X3GapFill /> : <GiHamburgerMenu />}
+        </div>
+        <div className="icon-button background-hover" onClick={() => refreshPage()}>
+          <MdOutlineRefresh />
+        </div>
+        <div className="icon-button background-hover" onClick={() => setAddingWebsite(true)}>
+          <MdAddCircleOutline />
+        </div>
+      </div>
+      <div className='flex-wrapper end-of-row'>
+        <Link to="/info" className="icon-button background-hover" >
+          <MdInfoOutline />
         </Link>
-      </div>
-      <div className="icon-button background-hover" onClick={changeViewState}>
-        {viewMode ? <BsFillGrid3X3GapFill /> : <GiHamburgerMenu />}
-      </div>
-      <div className="icon-button background-hover" onClick={() => refreshPage()}>
-        <MdOutlineRefresh />
-      </div>
-      <div className="icon-button background-hover" onClick={() => setAddingWebsite(true)}>
-        <MdAddCircleOutline />
+        <Link to="/settings" className="icon-button background-hover" >
+          <MdOutlineSettings />
+        </Link>
       </div>
     </div>
   );
