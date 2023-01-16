@@ -113,6 +113,7 @@ button {
         .flex-row {
           width: 100%;
           transition: 0.2s;
+          font-size: 0.8rem;
           h1 {
             flex: 1;
           }
@@ -153,7 +154,7 @@ button {
           box-sizing: border-box;
           .flex-row {
             width: 100%;
-            font-size: 0.8em;
+            font-size: 0.8rem;
             margin-bottom: 0.2rem;
           }
         }
@@ -386,4 +387,10 @@ button {
     color: #ffffff;
     background-color: #0f0f0f98;
   }
+}
+
+.loaded-favicon {
+  width: 24px;
+  height: 24px;
+  margin-right: 0.25rem;
 }

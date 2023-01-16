@@ -12,7 +12,16 @@ export async function getStatus(url: string, id: number) {
   try {
     const stringId = "monitor_event_" + id.toString()
     const result = await invoke('get_website_data', { url: url, id: stringId })
-    console.log(result);
+    return result
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export async function getIcon(url: string, id: number) {
+  try {
+    const stringId = "monitor_icon_event_" + id.toString()
+    const result = await invoke('get_website_icon', { url: url, id: stringId })
     return result
   } catch (err) {
     console.log(err);

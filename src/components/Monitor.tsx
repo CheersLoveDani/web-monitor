@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getStatus } from '../lib/api'
+import { getStatus, getIcon } from '../lib/api'
 import { useRecoilState } from 'recoil'
 import { siteLoadState, websiteDataState } from '../lib/atom'
 import { BiLinkExternal } from 'react-icons/bi'
@@ -19,13 +19,16 @@ const Monitor = (prop: { website: string, siteName: string, id: number }) => {
 
   const [status, setStatus] = useState('Untested')
   const [statusText, setStatusText] = useState('Untested')
-  const [loading, setLoading] = useState(true)
+  const [iconText, setIconText] = useState('')
+  const [loadingStatus, setLoadingStatus] = useState(true)
+  const [loadingIcon, setLoadingIcon] = useState(true)
   const [checkingDeletePrompt, setCheckingDeletePrompt] = useState(false)
 
 
   // useEffect - calls the checkStatus function on mount and whenever websiteData changes
   useEffect(() => {
     checkStatus();
+    checkIcon();
   }, [websiteData])
 
   useEffect(() => {
@@ -33,7 +36,6 @@ const Monitor = (prop: { website: string, siteName: string, id: number }) => {
       console.log('checking');
       checkStatus();
     }, 3600000); // Interval time in milliseconds (1 hour)
-
 
     return () => clearInterval(intervalId);
   }, []);
@@ -62,11 +64,10 @@ const Monitor = (prop: { website: string, siteName: string, id: number }) => {
   async function checkStatus() {
     try {
       await getStatus(prop.website, prop.id)
-      console.log(status);
       const eventName = "monitor_event_" + prop.id.toString()
       await listen(eventName, (event: any) => {
-        console.log(eventName + " : " + event.payload.status_payload);
-        setLoading(false)
+        // console.log(eventName + " : " + event.payload.status_payload);
+        setLoadingStatus(false)
         const status = event.payload.status_payload
         if (status == "200 OK") {
           setStatusText(status)
@@ -78,7 +79,31 @@ const Monitor = (prop: { website: string, siteName: string, id: number }) => {
       setStatus(err.request.status.toString());
       setStatusText(err.request.statusText)
       // console.log(err);
-      setLoading(false)
+      setLoadingStatus(false)
+    }
+  }
+
+  /**
+ * checkIcon - gets an icon for a website and sets the iconText state as a base64 encoded image
+ */
+  async function checkIcon() {
+    try {
+      await getIcon(prop.website, prop.id)
+      const eventName = "monitor_icon_event_" + prop.id.toString()
+      await listen(eventName, (event: any) => {
+        // console.log(eventName + " : " + event.payload.icon_payload);
+        setLoadingIcon(false)
+        const status = event.payload.icon_payload
+        setIconText(status)
+        if (status) {
+          console.log(prop.siteName + " : truthy :" + status);
+        } else {
+          console.log(prop.siteName + " : falsish");
+        }
+      })
+    } catch (err: any) {
+      setIconText(err.request.statusText)
+      setLoadingIcon(false)
     }
   }
 
@@ -114,6 +139,9 @@ const Monitor = (prop: { website: string, siteName: string, id: number }) => {
   return (
     <div className={'monitor-wrapper ' + statusText}>
       <div className='flex-row'>
+        {iconText ?
+          <img className='loaded-favicon' src={`data:image/x-icon;base64,${iconText}`} alt="Website Icon" />
+          : ''}
         <h1>{prop.siteName}</h1>
         <a className='icon-button background-hover'
           onClick={() => setSiteLoaded(true)} href={prop.website}
@@ -126,10 +154,10 @@ const Monitor = (prop: { website: string, siteName: string, id: number }) => {
 
       </div>
       <p className='monitor-url'>{prop.website}</p>
-      <p>{!loading && status ? statusText : ''}</p>
+      <p>{!loadingStatus && status ? statusText : ''}</p>
       <div className='inline-button-container'>
 
-        {loading ? <LoadingSpinner /> : ''}
+        {loadingStatus ? <LoadingSpinner /> : ''}
       </div>
 
 
