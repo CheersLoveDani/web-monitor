@@ -28,6 +28,16 @@ const Monitor = (prop: { website: string, siteName: string, id: number }) => {
     checkStatus();
   }, [websiteData])
 
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      console.log('checking');
+      checkStatus();
+    }, 3600000); // Interval time in milliseconds (1 hour)
+
+
+    return () => clearInterval(intervalId);
+  }, []);
+
 
   /**
    * openSite - opens the website in a new tab and checks if it is loaded
