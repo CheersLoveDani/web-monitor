@@ -34,3 +34,11 @@ export const addingWebsiteState = atom({
   key: 'addingWebsiteState',
   default: false,
 });
+
+/**
+ * atom for handling the layout of the website view
+ */
+export const viewModeState = atom({
+  key: 'viewModeState',
+  default: 0,
+});
