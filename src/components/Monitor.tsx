@@ -34,7 +34,6 @@ const Monitor = (prop: { website: string, siteName: string, id: number }) => {
   // useEffect - sets up an interval to call the checkStatus() function once every hour
   useEffect(() => {
     const intervalId = setInterval(() => {
-      console.log('checking');
       checkStatus();
     }, 3600000); // Interval time in milliseconds (1 hour)
 
@@ -46,16 +45,12 @@ const Monitor = (prop: { website: string, siteName: string, id: number }) => {
    * openSite - opens the website in a new tab and checks if it is loaded
    */
   async function openSite() {
-    console.log(prop.website);
     setSiteLoaded(false);
     const site = window.open(prop.website);
     if (site) {
-      console.log("Site opened");
       site.onload = function () {
-        console.log("Site loaded correctly");
       }
     } else {
-      console.log("Site did not load");
     }
   }
 
@@ -67,19 +62,13 @@ const Monitor = (prop: { website: string, siteName: string, id: number }) => {
       await getStatus(prop.website, prop.id)
       const eventName = "monitor_event_" + prop.id.toString()
       await listen(eventName, (event: any) => {
-        // console.log(eventName + " : " + event.payload.status_payload);
         setLoadingStatus(false)
         const status = event.payload.status_payload
-        if (status == "200 OK") {
-          setStatusText(status)
-        } else {
-          setStatusText("404 Not Found")
-        }
+        setStatusText(status)
       })
     } catch (err: any) {
       setStatus(err.request.status.toString());
       setStatusText(err.request.statusText)
-      // console.log(err);
       setLoadingStatus(false)
     }
   }
@@ -92,15 +81,9 @@ const Monitor = (prop: { website: string, siteName: string, id: number }) => {
       await getIcon(prop.website, prop.id)
       const eventName = "monitor_icon_event_" + prop.id.toString()
       await listen(eventName, (event: any) => {
-        // console.log(eventName + " : " + event.payload.icon_payload);
         setLoadingIcon(false)
         const status = event.payload.icon_payload
         setIconText(status)
-        if (status) {
-          console.log(prop.siteName + " : truthy :" + status);
-        } else {
-          console.log(prop.siteName + " : falsish");
-        }
       })
     } catch (err: any) {
       setIconText(err.request.statusText)
@@ -119,7 +102,6 @@ const Monitor = (prop: { website: string, siteName: string, id: number }) => {
       }
     })
 
-    console.log(postDeleteWebsiteData);
     setWebsiteData(postDeleteWebsiteData);
     saveLoad(postDeleteWebsiteData)
   }
@@ -130,16 +112,16 @@ const Monitor = (prop: { website: string, siteName: string, id: number }) => {
    */
   async function saveLoad(postDeleteWebsiteData: any) {
     saveFileLocal(JSON.stringify(postDeleteWebsiteData))
-    const newData = JSON.parse(await readFile())
-    setWebsiteData(newData)
+    // const newData = JSON.parse(await readFile())
+    // setWebsiteData(newData)
   }
 
 
   return (
-    <div className={'monitor-wrapper ' + statusText}>
+    <div className={'monitor-wrapper status' + statusText}>
       <div className='flex-row'>
         {iconText ?
-          <img className='loaded-favicon' src={`data:image/x-icon;base64,${iconText}`} alt="Website Icon" />
+          <img className='loaded-favicon' src={`data:image/x-icon;base64,${iconText}`} alt="Website Icon" onError={(e) => e.currentTarget.style.display = 'none'} />
           : ''}
         <h1>{prop.siteName}</h1>
         <a className='icon-button background-hover'

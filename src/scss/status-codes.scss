@@ -1,0 +1,87 @@
+.main-content {
+  .main-grid {
+    .main-grid-child {
+      .monitor-wrapper {
+        &.status100,
+        &.status200,
+        &.status201,
+        &.status202,
+        &.status204,
+        &.status205,
+        &.status206,
+        &.status207,
+        &.status226 {
+          background: fade-out(green, 0.75);
+          border: 1px green solid;
+        }
+        &.status101,
+        &.status102,
+        &.status103,
+        &.status203,
+        &.status208,
+        &.status300,
+        &.status301,
+        &.status302,
+        &.status303,
+        &.status304,
+        &.status305,
+        &.status306,
+        &.status307,
+        &.status308 {
+          background: fade-out(orange, 0.75);
+          border: 1px orange dashed;
+        }
+        &.status400,
+        &.status401,
+        &.status402,
+        &.status403,
+        &.status404,
+        &.status405,
+        &.status406,
+        &.status407,
+        &.status408,
+        &.status409,
+        &.status410,
+        &.status411,
+        &.status412,
+        &.status413,
+        &.status414,
+        &.status415,
+        &.status416,
+        &.status417,
+        &.status421,
+        &.status422,
+        &.status423,
+        &.status424,
+        &.status425,
+        &.status426,
+        &.status427,
+        &.status428,
+        &.status429,
+        &.status431,
+        &.status451,
+        &.status500,
+        &.status501,
+        &.status502,
+        &.status503,
+        &.status504,
+        &.status505,
+        &.status506,
+        &.status507,
+        &.status508,
+        &.status510,
+        &.status511 {
+          background: fade-out(red, 0.75);
+          border: 1px red dashed;
+        }
+        &.status418 {
+          &:hover {
+            transform: rotate(360deg);
+          }
+          background: fade-out(purple, 0.55);
+          border: 1px purple solid;
+        }
+      }
+    }
+  }
+}

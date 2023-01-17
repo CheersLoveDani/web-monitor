@@ -80,6 +80,7 @@ button {
   outline: none;
 }
 
+@import "./scss/status-codes.scss";
 .main-content {
   overflow-y: auto;
   flex: 1;
@@ -117,18 +118,6 @@ button {
           h1 {
             flex: 1;
           }
-        }
-        &.OK {
-          background: fade-out(green, 0.75);
-          border: 1px green solid;
-        }
-        &.Forbidden {
-          background: fade-out(orange, 0.75);
-          border: 1px orange dashed;
-        }
-        &.Not.Found {
-          background: fade-out(red, 0.75);
-          border: 1px red dashed;
         }
       }
     }

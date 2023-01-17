@@ -22,6 +22,9 @@ p {
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+  @include media(mobile) {
+    flex-direction: row;
+  }
   gap: 0.25rem;
   position: sticky;
   padding: 0.5rem;
@@ -56,5 +59,11 @@ p {
     justify-content: flex-start;
     align-items: center;
     gap: 0.25rem;
+  }
+  .start-of-row,
+  .end-of-row {
+    @include media(mobile) {
+      flex-direction: row;
+    }
   }
 }

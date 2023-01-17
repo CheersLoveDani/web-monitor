@@ -1,3 +1,4 @@
+import { url } from 'inspector';
 import { useState } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
 import { useRecoilState } from "recoil";
@@ -37,14 +38,50 @@ const AddWebsite = () => {
     setNewWebsiteData({ ...newWebsiteData, url: event.target.value, id: websiteData.length })
   }
 
+  function convertUrlToHttps(): string {
+    let url = newWebsiteData.url
+    console.log(url);
+
+    // if (url.startsWith("https://www.")) {
+    //   console.log('1');
+    //   return url
+    // }
+    if (url.startsWith("https://")) {
+      console.log('1');
+      return url
+    } else {
+      url = "https://" + url
+    }
+
+
+    // if (url.startsWith("www.")) {
+    //   console.log('2');
+    //   url = "https://" + url
+    // }
+    // else {
+    //   console.log('3');
+    //   url = "https://www." + url
+    // }
+    console.log(url);
+    return url
+
+  }
+
+  console.log(newWebsiteData);
+
   /**
    * saveToWebsiteData saves the new website to the websiteData state and saves it to the local file, then closes the modal with stopAddingWebsite()
    */
-
   function saveToWebsiteData() {
-    setNewWebsiteData({ ...newWebsiteData, id: websiteData.length })
+    const newUrl = convertUrlToHttps()
+    setNewWebsiteData({ ...newWebsiteData, id: websiteData.length, url: newUrl })
     const oldWebsiteDataArray = websiteData
-    const newData = oldWebsiteDataArray.concat([newWebsiteData])
+    let newData
+    if (!newWebsiteData.name) {
+      newData = oldWebsiteDataArray.concat([{ ...newWebsiteData, id: websiteData.length, url: newUrl, name: newUrl }])
+    } else {
+      newData = oldWebsiteDataArray.concat([{ ...newWebsiteData, id: websiteData.length, url: newUrl }])
+    }
     console.log(newData);
     setWebsiteData(newData)
     saveLoad(newData)
@@ -57,8 +94,8 @@ const AddWebsite = () => {
    */
   async function saveLoad(dataToSave: any) {
     saveFileLocal(JSON.stringify(dataToSave))
-    const newData = JSON.parse(await readFile())
-    setWebsiteData(newData)
+    // const newData = JSON.parse(await readFile())
+    // setWebsiteData(newData)
   }
 
 
