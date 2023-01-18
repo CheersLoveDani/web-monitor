@@ -24,8 +24,6 @@ function MainView() {
    */
   async function load() {
     const newData = JSON.parse(await readFile())
-    console.log(newData);
-
     setWebsiteData(newData)
   }
 
@@ -40,7 +38,7 @@ function MainView() {
         {websiteData[0] ?
           websiteData.map((website) => (
             <div className="main-grid-child" key={website.id}>
-              <Monitor website={website.url} siteName={website.name} id={website.id} />
+              <Monitor url={website.url} name={website.name} id={website.id} />
             </div>
           )) : ''
         }

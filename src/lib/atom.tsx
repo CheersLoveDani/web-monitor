@@ -19,6 +19,7 @@ interface WebsiteLayout {
 }
 const websiteArrayInterface: WebsiteLayout[] = [];
 
+
 /**
  * atom for handling the state of website data
  */
@@ -27,6 +28,7 @@ export const websiteDataState = atom({
   default: websiteArrayInterface,
 });
 
+
 /**
  * atom for handling the state of adding website
  */
@@ -34,6 +36,7 @@ export const addingWebsiteState = atom({
   key: 'addingWebsiteState',
   default: false,
 });
+
 
 /**
  * atom for handling the layout of the website view

@@ -51,6 +51,7 @@ button,
   margin: 0.25rem 0;
   display: block;
   width: max-content;
+  box-sizing: border-box;
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
@@ -61,23 +62,21 @@ button,
   background-color: #ffffff;
   transition: border-color 0.25s;
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
-}
-
-button {
-  cursor: pointer;
-}
-
-button,
-.btn {
+  outline: none;
   &:hover {
     border-color: #396cd8;
     color: inherit;
   }
 }
 
-input,
-button {
-  outline: none;
+input {
+  width: 100%;
+  max-width: 30rem;
+}
+
+button,
+.btn {
+  cursor: pointer;
 }
 
 @import "./scss/status-codes.scss";
@@ -401,4 +400,14 @@ button {
   .right {
     align-self: flex-end;
   }
+}
+
+input.editing-input {
+  margin: 0;
+  padding: 0 0.5rem;
+  background: fade-out($color: white, $amount: 0.95);
+  box-shadow: none;
+  border: 1px white solid;
+  font-weight: inherit;
+  border-radius: 0.25rem;
 }

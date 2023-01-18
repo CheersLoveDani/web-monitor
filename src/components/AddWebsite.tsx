@@ -39,26 +39,25 @@ const AddWebsite = () => {
     setNewWebsiteData({ ...newWebsiteData, url: event.target.value, id: websiteData.length })
   }
 
-  function convertUrlToHttps(): string {
-    let url = newWebsiteData.url
-    console.log(url);
+  /**
+ * Converts a given URL to HTTPS format.
+ * @returns {string} The converted HTTPS URL.
+ */
+  function convertUrlToHttps(oldUrl: string): string {
+    let url = oldUrl
     if (url.startsWith("https://")) {
-      console.log('1');
       return url
     } else {
       url = "https://" + url
     }
-    console.log(url);
     return url
   }
-
-  console.log(newWebsiteData);
 
   /**
    * saveToWebsiteData saves the new website to the websiteData state and saves it to the local file, then closes the modal with stopAddingWebsite()
    */
   function saveToWebsiteData() {
-    const newUrl = convertUrlToHttps()
+    const newUrl = convertUrlToHttps(newWebsiteData.url)
     setNewWebsiteData({ ...newWebsiteData, id: websiteData.length, url: newUrl })
     const oldWebsiteDataArray = websiteData
     let newData
@@ -67,7 +66,6 @@ const AddWebsite = () => {
     } else {
       newData = oldWebsiteDataArray.concat([{ ...newWebsiteData, id: websiteData.length, url: newUrl }])
     }
-    console.log(newData);
     const modifiedWebsiteData = convertWebsiteDataId(newData)
     saveWebsiteData(modifiedWebsiteData)
     setWebsiteData(modifiedWebsiteData)

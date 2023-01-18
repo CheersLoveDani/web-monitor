@@ -16,8 +16,6 @@ const DeletePrompt = (prop: { name: string, id: number, setCheckingDeletePrompt:
         return true
       }
     })
-
-    console.log(postDeleteWebsiteData);
     const modifiedWebsiteData = convertWebsiteDataId(postDeleteWebsiteData)
     saveWebsiteData(modifiedWebsiteData)
     setWebsiteData(modifiedWebsiteData)
