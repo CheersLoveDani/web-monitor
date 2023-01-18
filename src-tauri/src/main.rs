@@ -127,3 +127,11 @@ fn main() {
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
+
+
+// App originally created by:
+// _____    _    _   _ ___
+// |  _ \  / \  | \ | |_ _|
+// | | | |/ _ \ |  \| || |
+// | |_| / ___ \| |\  || |
+// |____/_/   \_|_| \_|___|

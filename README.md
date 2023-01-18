@@ -17,3 +17,14 @@ See progress on the trello board: [https://trello.com/b/PFibLBhZ/web-monitor](ht
 ## Github
 
 [https://github.com/sirdantheawesome/web-monitor](https://github.com/sirdantheawesome/web-monitor)
+
+
+
+```
+App originally created by:
+_____    _    _   _ ___
+|  _ \  / \  | \ | |_ _|
+| | | |/ _ \ |  \| || |
+| |_| / ___ \| |\  || |
+|____/_/   \_|_| \_|___|
+```

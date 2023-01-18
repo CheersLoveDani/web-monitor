@@ -4,6 +4,7 @@ import { AiOutlineClose } from 'react-icons/ai';
 import { useRecoilState } from "recoil";
 import { addingWebsiteState, websiteDataState } from "../lib/atom";
 import { readFile, saveFileLocal } from '../lib/fileHandling';
+import { convertWebsiteDataId, save, saveWebsiteData } from '../lib/saveLoad';
 
 
 /**
@@ -41,30 +42,14 @@ const AddWebsite = () => {
   function convertUrlToHttps(): string {
     let url = newWebsiteData.url
     console.log(url);
-
-    // if (url.startsWith("https://www.")) {
-    //   console.log('1');
-    //   return url
-    // }
     if (url.startsWith("https://")) {
       console.log('1');
       return url
     } else {
       url = "https://" + url
     }
-
-
-    // if (url.startsWith("www.")) {
-    //   console.log('2');
-    //   url = "https://" + url
-    // }
-    // else {
-    //   console.log('3');
-    //   url = "https://www." + url
-    // }
     console.log(url);
     return url
-
   }
 
   console.log(newWebsiteData);
@@ -83,20 +68,12 @@ const AddWebsite = () => {
       newData = oldWebsiteDataArray.concat([{ ...newWebsiteData, id: websiteData.length, url: newUrl }])
     }
     console.log(newData);
-    setWebsiteData(newData)
-    saveLoad(newData)
+    const modifiedWebsiteData = convertWebsiteDataId(newData)
+    saveWebsiteData(modifiedWebsiteData)
+    setWebsiteData(modifiedWebsiteData)
     stopAddingWebsite()
   }
 
-  /**
-   * Function that saves the data to the local file system, and loads the data back into the state.
-   * @param {any} dataToSave - The website data to save to local storage.
-   */
-  async function saveLoad(dataToSave: any) {
-    saveFileLocal(JSON.stringify(dataToSave))
-    // const newData = JSON.parse(await readFile())
-    // setWebsiteData(newData)
-  }
 
 
   return (

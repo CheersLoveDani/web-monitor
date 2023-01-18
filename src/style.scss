@@ -383,3 +383,22 @@ button {
   height: 24px;
   margin-right: 0.25rem;
 }
+
+.button-flex-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  button.danger {
+    background: darken(red, 15%);
+  }
+}
+
+.flex-between-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  .right {
+    align-self: flex-end;
+  }
+}

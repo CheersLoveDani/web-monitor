@@ -1,10 +1,15 @@
 import { useRecoilState } from 'recoil';
 import { websiteDataState } from '../lib/atom';
 import { readFile, saveFileLocal } from '../lib/fileHandling';
+import { convertWebsiteDataId, save, saveWebsiteData } from '../lib/saveLoad';
 
-const DeletePrompt = (prop: { website: any, id: any }) => {
+const DeletePrompt = (prop: { name: string, id: number, setCheckingDeletePrompt: React.Dispatch<React.SetStateAction<boolean>> }) => {
   const [websiteData, setWebsiteData] = useRecoilState(websiteDataState)
 
+  /**
+  * deleteWebsite - function that deletes a website from the websiteData array and saves the updated array
+  *
+  */
   function deleteWebsite() {
     const postDeleteWebsiteData = websiteData.filter((website: any) => {
       if (website.id !== prop.id) {
@@ -13,26 +18,26 @@ const DeletePrompt = (prop: { website: any, id: any }) => {
     })
 
     console.log(postDeleteWebsiteData);
-    setWebsiteData(postDeleteWebsiteData);
-    saveLoad(postDeleteWebsiteData)
+    const modifiedWebsiteData = convertWebsiteDataId(postDeleteWebsiteData)
+    saveWebsiteData(modifiedWebsiteData)
+    setWebsiteData(modifiedWebsiteData)
+    prop.setCheckingDeletePrompt(false);
   }
 
 
-  async function saveLoad(postDeleteWebsiteData: any) {
-    saveFileLocal(JSON.stringify(postDeleteWebsiteData))
-    const newData = JSON.parse(await readFile())
-    setWebsiteData(newData)
-  }
 
   return (
-    <div className='modal-outer-wrapper'>
-      <div className='modal-inner-wrapper'>
-        <h1>Are you sure?</h1>
-        <button onClick={() => {
-          deleteWebsite();
-        }}>Delete it</button>
-        <button onClick={() => {
-        }}>Cancel</button>
+    <div className='modal-outer-wrapper' onClick={() => prop.setCheckingDeletePrompt(false)}>
+      <div className='modal-inner-wrapper' onClick={(event) => event.stopPropagation()}>
+        <h1>{`Are you sure you want to delete "${prop.name}" ?`}</h1>
+        <div className='button-flex-row'>
+          <button onClick={() => {
+            prop.setCheckingDeletePrompt(false);
+          }}>Cancel</button>
+          <button className='danger' onClick={() => {
+            deleteWebsite();
+          }}>Delete it</button>
+        </div>
       </div>
     </div>
   );

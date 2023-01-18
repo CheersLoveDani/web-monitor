@@ -15,3 +15,10 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <App />
   </RecoilRoot>
 );
+
+// App originally created by:
+// _____    _    _   _ ___
+// |  _ \  / \  | \ | |_ _|
+// | | | |/ _ \ |  \| || |
+// | |_| / ___ \| |\  || |
+// |____/_/   \_|_| \_|___|

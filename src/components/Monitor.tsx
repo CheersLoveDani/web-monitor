@@ -8,6 +8,7 @@ import { ImBin } from 'react-icons/im'
 import LoadingSpinner from './LoadingSpinner'
 import { readFile, saveFileLocal } from '../lib/fileHandling'
 import { listen } from '@tauri-apps/api/event'
+import DeletePrompt from './DeletePrompt'
 
 /**
  * Monitor - a functional component that displays the status of a website
@@ -91,29 +92,8 @@ const Monitor = (prop: { website: string, siteName: string, id: number }) => {
     }
   }
 
-  /**
-   * deleteWebsite - function that deletes a website from the websiteData array and saves the updated array
-   *
-   */
-  function deleteWebsite() {
-    const postDeleteWebsiteData = websiteData.filter((website) => {
-      if (website.id !== prop.id) {
-        return true
-      }
-    })
-
-    setWebsiteData(postDeleteWebsiteData);
-    saveLoad(postDeleteWebsiteData)
-  }
-
-  /**
-   * saveLoad - function that saves the updated websiteData array and reloads the new data
-   * @param {any} postDeleteWebsiteData - an object containing the updated websiteData after deletion 
-   */
-  async function saveLoad(postDeleteWebsiteData: any) {
-    saveFileLocal(JSON.stringify(postDeleteWebsiteData))
-    // const newData = JSON.parse(await readFile())
-    // setWebsiteData(newData)
+  function checkDelete() {
+    setCheckingDeletePrompt(true)
   }
 
 
@@ -129,7 +109,7 @@ const Monitor = (prop: { website: string, siteName: string, id: number }) => {
           target={'default'}><AiOutlineArrowUp />
         </a>
         <div className='icon-button background-hover' onClick={openSite}><BiLinkExternal /></div>
-        <div className='icon-button background-hover icon-danger' onClick={deleteWebsite}>
+        <div className='icon-button background-hover icon-danger' onClick={checkDelete}>
           <ImBin />
         </div>
       </div>
@@ -138,7 +118,9 @@ const Monitor = (prop: { website: string, siteName: string, id: number }) => {
       <div className='inline-button-container'>
         {loadingStatus ? <LoadingSpinner /> : ''}
       </div>
+      {checkingDeletePrompt ? <DeletePrompt name={prop.siteName} id={prop.id} setCheckingDeletePrompt={setCheckingDeletePrompt} /> : ''}
     </div>
+
   );
 };
 
