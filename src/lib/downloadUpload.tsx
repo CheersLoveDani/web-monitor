@@ -19,7 +19,7 @@ export async function download(fileContents: string, fileName: string) {
   }
 }
 
-export async function uploadWebsiteData(): any {
+export async function uploadWebsiteData(): Promise<any> {
   try {
     const filePath = await open({
       filters: [{ name: 'All Files', extensions: ['json'] }],
