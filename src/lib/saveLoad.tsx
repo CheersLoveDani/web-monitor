@@ -7,7 +7,7 @@ import { saveFileLocal } from "./fileHandling";
  */
 export async function save(data: any): Promise<boolean> {
   try {
-    await saveFileLocal(JSON.stringify(data))
+    await saveFileLocal('data.json', JSON.stringify(data))
     return true
   } catch (err) {
     console.log(err);
@@ -34,7 +34,21 @@ export function convertWebsiteDataId(websiteData: any): any {
  */
 export async function saveWebsiteData(websiteData: any) {
   try {
-    await saveFileLocal(JSON.stringify(websiteData))
+    await saveFileLocal('data.json', JSON.stringify(websiteData))
+  } catch (err) {
+    console.log(err);
+    return false
+  }
+}
+
+/**
+ * saveSettingsData - function that saves the Settings data object to a local file
+ * @param {any} settingsData - an object of Settings data
+ * @returns {Promise<boolean>} - A promise that resolves to true if the save operation is successful, false otherwise.
+ */
+export async function saveSettingsData(settingsData: any) {
+  try {
+    await saveFileLocal('settings.json', JSON.stringify(settingsData))
   } catch (err) {
     console.log(err);
     return false

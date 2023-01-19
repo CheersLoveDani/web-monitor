@@ -1,10 +1,8 @@
-import { url } from 'inspector';
 import { useState } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
 import { useRecoilState } from "recoil";
 import { addingWebsiteState, websiteDataState } from "../lib/atom";
-import { readFile, saveFileLocal } from '../lib/fileHandling';
-import { convertWebsiteDataId, save, saveWebsiteData } from '../lib/saveLoad';
+import { convertWebsiteDataId, saveWebsiteData } from '../lib/saveLoad';
 
 
 /**

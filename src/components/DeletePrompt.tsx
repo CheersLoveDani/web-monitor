@@ -1,7 +1,6 @@
 import { useRecoilState } from 'recoil';
 import { websiteDataState } from '../lib/atom';
-import { readFile, saveFileLocal } from '../lib/fileHandling';
-import { convertWebsiteDataId, save, saveWebsiteData } from '../lib/saveLoad';
+import { convertWebsiteDataId, saveWebsiteData } from '../lib/saveLoad';
 
 const DeletePrompt = (prop: { name: string, id: number, setCheckingDeletePrompt: React.Dispatch<React.SetStateAction<boolean>> }) => {
   const [websiteData, setWebsiteData] = useRecoilState(websiteDataState)
