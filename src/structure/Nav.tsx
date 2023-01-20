@@ -10,15 +10,16 @@ import { BsFillGrid3X3GapFill } from 'react-icons/bs';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { MdAddCircleOutline, MdInfoOutline, MdOutlineRefresh, MdOutlineSettings } from 'react-icons/md';
 
-import { addingWebsiteState, viewModeState } from '../lib/atom';
+import { addingWebsiteState, settingsDataState, viewModeState } from '../lib/atom';
 
 import logo from '../assets/128x128-white.png'
 import { AiFillHome } from 'react-icons/ai';
+import { saveSettingsData } from '../lib/saveLoad';
 
 const Nav = () => {
 
-  const [viewMode, setViewMode] = useRecoilState(viewModeState);
   const [addingWebsite, setAddingWebsite] = useRecoilState(addingWebsiteState)
+  const [settingsData, setSettingsData] = useRecoilState(settingsDataState)
 
   /**
   * Refresh the current page
@@ -28,13 +29,15 @@ const Nav = () => {
   }
 
   /**
-     * Change the view mode between grid and row
+     * Change the view mode between grid and row and save it to settings
      */
   function changeViewState() {
-    if (viewMode == 0) {
-      setViewMode(1)
+    if (settingsData.viewLayout == 0) {
+      setSettingsData({ ...settingsData, viewLayout: 1 })
+      saveSettingsData({ ...settingsData, viewLayout: 1 });
     } else {
-      setViewMode(0)
+      setSettingsData({ ...settingsData, viewLayout: 0 })
+      saveSettingsData({ ...settingsData, viewLayout: 0 });
     }
   }
 
@@ -50,7 +53,7 @@ const Nav = () => {
           <AiFillHome />
         </Link>
         <div className="icon-button background-hover" onClick={changeViewState}>
-          {viewMode ? <BsFillGrid3X3GapFill /> : <GiHamburgerMenu />}
+          {settingsData.viewLayout ? <BsFillGrid3X3GapFill /> : <GiHamburgerMenu />}
         </div>
         <div className="icon-button background-hover" onClick={() => refreshPage()}>
           <MdOutlineRefresh />

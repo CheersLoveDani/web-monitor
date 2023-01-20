@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import { useRecoilState } from "recoil"
 import AddWebsite from "../../components/AddWebsite"
 import Monitor from "../../components/Monitor"
-import { addingWebsiteState, siteLoadState, viewModeState, websiteDataState } from "../../lib/atom"
+import { addingWebsiteState, settingsDataState, siteLoadState, viewModeState, websiteDataState } from "../../lib/atom"
 import { readFile } from "../../lib/fileHandling"
 
 function MainView() {
@@ -11,10 +11,10 @@ function MainView() {
   const [siteLoaded, setSiteLoaded] = useRecoilState(siteLoadState)
   const [websiteData, setWebsiteData] = useRecoilState(websiteDataState)
   const [addingWebsite, setAddingWebsite] = useRecoilState(addingWebsiteState)
-  const [viewMode, setViewMode] = useRecoilState(viewModeState);
+  const [settingsData, setSettingsData] = useRecoilState(settingsDataState)
 
   return (
-    <div className={`main-content ${viewMode ? 'grid-mode' : 'row-mode'}`}>
+    <div className={`main-content ${settingsData.viewLayout ? 'grid-mode' : 'row-mode'}`}>
       <div className={`iframe-wrapper ${siteLoaded ? 'active' : 'not-active'}`}>
         <iframe name="default" className={siteLoaded ? 'active' : 'not-active'} />
         <button onClick={() => setSiteLoaded(false)}>Close</button>

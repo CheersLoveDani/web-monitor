@@ -45,3 +45,21 @@ export const viewModeState = atom({
   key: 'viewModeState',
   default: 0,
 });
+
+/**
+ * interface for the Settings layout
+ */
+interface SettingsLayout {
+  viewLayout: number
+  refreshIntervalMinutes: number
+}
+const settingsInterface: SettingsLayout = { viewLayout: 0, refreshIntervalMinutes: 60 };
+
+
+/**
+ * atom for handling the settings data
+ */
+export const settingsDataState = atom({
+  key: 'settingsDataState',
+  default: settingsInterface,
+});

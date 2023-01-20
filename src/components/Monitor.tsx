@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { getStatus, getIcon } from '../lib/api'
 import { useRecoilState } from 'recoil'
-import { siteLoadState, websiteDataState } from '../lib/atom'
+import { settingsDataState, siteLoadState, websiteDataState } from '../lib/atom'
 import { BiLinkExternal } from 'react-icons/bi'
 import { AiOutlineArrowUp } from 'react-icons/ai'
 import { ImBin } from 'react-icons/im'
@@ -17,6 +17,7 @@ import { saveWebsiteData } from '../lib/saveLoad'
 const Monitor = (prop: { url: string, name: string, id: number }) => {
   const [siteLoaded, setSiteLoaded] = useRecoilState(siteLoadState)
   const [websiteData, setWebsiteData] = useRecoilState(websiteDataState)
+  const [settingsData, setSettingsData] = useRecoilState(settingsDataState)
 
   const [status, setStatus] = useState('Untested')
   const [statusText, setStatusText] = useState('Untested')
@@ -37,14 +38,17 @@ const Monitor = (prop: { url: string, name: string, id: number }) => {
     checkIcon();
   }, [websiteData])
 
-  // useEffect - sets up an interval to call the checkStatus() function once every hour
+  // useEffect - sets up an interval to call the checkStatus() function to call however often is set in settings
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      checkStatus();
-    }, 3600000); // Interval time in milliseconds (1 hour)
-    return () => clearInterval(intervalId);
+    setCheckInterval()
   }, []);
 
+  function setCheckInterval() {
+    const intervalId = setInterval(() => {
+      checkStatus();
+    }, 60000 * settingsData.refreshIntervalMinutes); // Interval time in milliseconds (1 hour)
+    return () => clearInterval(intervalId);
+  }
 
   /**
  * Opens the website in a new tab and sets the "siteLoaded" state to false.

@@ -3,6 +3,12 @@ import { writeTextFile, readTextFile } from '@tauri-apps/api/fs';
 import { convertWebsiteDataId, saveWebsiteData } from './saveLoad';
 
 
+/**
+ * Asynchronously downloads data, saves it to the location specified by the user 
+ * and writes the contents of the file.
+ * @param {string} fileContents - The contents of the file to be saved.
+ * @param {string} fileName - The name of the file to be saved.
+ */
 export async function download(fileContents: string, fileName: string) {
   try {
     const filePath = await save({
@@ -19,6 +25,11 @@ export async function download(fileContents: string, fileName: string) {
   }
 }
 
+/**
+ * Asynchronously uploads website data, converts it, saves it, 
+ * and returns the modified data to be set to a recoil state.
+ * @returns {Promise<any>} - The modified website data.
+ */
 export async function uploadWebsiteData(): Promise<any> {
   try {
     const filePath = await open({

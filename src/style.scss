@@ -417,3 +417,16 @@ input.editing-input {
   font-weight: inherit;
   border-radius: 0.25rem;
 }
+
+.inline {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1rem;
+  svg {
+    width: 32px;
+    height: 32px;
+    color: rgb(0, 185, 0);
+  }
+}

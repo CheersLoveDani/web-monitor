@@ -9,7 +9,7 @@ import MainView from "./structure/routes/MainView"
 import Info from "./structure/routes/Info";
 import Settings from "./structure/routes/Settings";
 import { useRecoilState } from "recoil";
-import { websiteDataState } from "./lib/atom";
+import { settingsDataState, websiteDataState } from "./lib/atom";
 import { readFile } from "./lib/fileHandling";
 import { useEffect } from "react";
 
@@ -17,6 +17,7 @@ import { useEffect } from "react";
 function App() {
   // Recoil state for the websiteData state, see lib/atoms.tsx
   const [websiteData, setWebsiteData] = useRecoilState(websiteDataState)
+  const [settingsData, setSettingsData] = useRecoilState(settingsDataState)
 
   // UseEffect to load the website data when the component is rendered
   useEffect(() => {
@@ -27,8 +28,10 @@ function App() {
    * Load the website data from the local storage
    */
   async function load() {
-    const newData = JSON.parse(await readFile('data.json'))
-    setWebsiteData(newData)
+    const newWebsiteData = JSON.parse(await readFile('data.json'))
+    setWebsiteData(newWebsiteData)
+    const newSettingsData = JSON.parse(await readFile('settings.json'))
+    setSettingsData(newSettingsData)
   }
 
   return (
