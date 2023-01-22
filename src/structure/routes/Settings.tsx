@@ -5,11 +5,14 @@ import { download, uploadWebsiteData } from "../../lib/downloadUpload";
 import { saveSettingsData } from "../../lib/saveLoad";
 import { useState } from "react";
 import { TiTick } from "react-icons/ti"
+import { MdOutlineError } from "react-icons/md";
 
 const Settings = () => {
   const [websiteData, setWebsiteData] = useRecoilState(websiteDataState)
   const [settingsData, setSettingsData] = useRecoilState(settingsDataState)
 
+  const [errorUploadingMessage, setErrorUploadingMessage] = useState('')
+  // const [uploaded, setUploaded] = useState(false)
   const [saved, setSaved] = useState(false)
 
   const navigate = useNavigate();
@@ -21,8 +24,15 @@ const Settings = () => {
  */
   async function upload() {
     const newData = await uploadWebsiteData()
-    setWebsiteData(newData)
-    navigate("/");
+    try {
+      if (newData[0].name) {
+        setWebsiteData(newData)
+        // setUploaded(true)
+        navigate("/");
+      }
+    } catch (err) {
+      setErrorUploadingMessage(newData.err)
+    }
   }
 
   /**
@@ -58,12 +68,17 @@ const Settings = () => {
           >Download data</button>
 
           <h2>{`Load website data (JSON)`}</h2>
-          <button
-            onClick={() => {
-              upload()
-            }}
-          >
-            Upload data</button>
+          <div className="inline">
+
+            <button
+              onClick={() => {
+                upload()
+              }}
+            >
+              Upload data
+            </button>
+            {errorUploadingMessage ? <p className="error-text"><MdOutlineError /> {errorUploadingMessage} </p> : ''}
+          </div>
 
           <h2>{`Time between checks (Minutes 1-120)?`}</h2>
           <div className="inline">
@@ -77,7 +92,7 @@ const Settings = () => {
               onChange={(event) => {
                 handleRefreshIntervalChange(event)
               }}
-            /> {saved ? <div className="inline"><TiTick /></div> : ''}
+            /> {saved ? <div className="ok-text"><TiTick /></div> : ''}
           </div>
           {/* <h2>{`(⌐■_■) coming soon below (¬_¬ )`} </h2> */}
         </div>

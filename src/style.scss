@@ -427,6 +427,24 @@ input.editing-input {
   svg {
     width: 32px;
     height: 32px;
-    color: rgb(0, 185, 0);
+  }
+}
+
+.ok-text svg {
+  color: rgb(0, 185, 0);
+}
+
+.error-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  color: lighten(red, 3);
+  font-weight: bold;
+  font-size: 1.5rem;
+  * {
+    padding: 0.4rem 0.5rem;
+    border-radius: 0.5rem;
+    background: fade-out(black, 0.6);
   }
 }

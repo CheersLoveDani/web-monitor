@@ -39,11 +39,17 @@ export async function uploadWebsiteData(): Promise<any> {
     if (!filePath) {
       return
     }
-    const newData = JSON.parse(await readTextFile(filePath.toString()));
-    console.log(newData);
-    const modifiedWebsiteData = convertWebsiteDataId(newData)
-    await saveWebsiteData(modifiedWebsiteData)
-    return modifiedWebsiteData
+    try {
+      const newData = JSON.parse(await readTextFile(filePath.toString()));
+      console.log(newData);
+      const modifiedWebsiteData = convertWebsiteDataId(newData)
+      await saveWebsiteData(modifiedWebsiteData)
+      return modifiedWebsiteData
+    } catch (err) {
+      // console.log("Invalid Data Structure"");
+      return { err: "Invalid Data Structure" }
+    }
+
 
   } catch (e) {
     console.error(e)
